@@ -1,4 +1,6 @@
 import ml.linearclassifier.batch as batch
+import ml.linearclassifier.stochastic as sls
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -38,7 +40,7 @@ y = np.where(y == 'A', -1, 1)
 X = df1.iloc[:, [0,1]].values
 plt.scatter(X[:, 0], X[:, 1], c=y)
 
-net = batch.BatchPerceptron(eta = 0.0001, init_weights = 0, should_stop=300)
+net = sls.StochasticPerceptron(eta = 0.0001, init_weights = 0, should_stop=300)
 net.fit(X,y)
 
 # get decisions regions
@@ -58,6 +60,6 @@ def convergencePoint(total_error):
             convergence_point = index+1
     return convergence_point
 
-print('the convergence step is:', convergencePoint(net.total_error))
+print('the convergence step  for the Stochastic Perceptron is:', convergencePoint(net.total_error))
 plt.show()
 plt.gcf().clear()

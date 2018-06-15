@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-df1 = pd.read_csv("/home/lubianat/Documentos/Disciplines/IBI5---/tarefa_01/dataset/dataset-1.data", sep=';', )
+df1 = pd.read_csv("dataset/dataset-1.data", sep=';', )
 df2 = pd.read_csv("/home/lubianat/Documentos/Disciplines/IBI5---/tarefa_01/dataset/dataset-2.data", sep=';', )
 
 plt.subplot(1, 2, 1)

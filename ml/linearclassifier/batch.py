@@ -5,12 +5,14 @@ import ml.linearclassifier.classifier as lc
 
 # eta is the learning rate (float)
 # should_stop is the number of epochs the algorithm has to run before it should stop
-# init_weights can be like anything, the object sets it anyways
+# init_weights is  a mock parameter. It is override anyways. It was left as a settable attribute 
+# for making the point that it COULD be set
+
 
 class BatchLinearClassifier(lc.LinearClassifier):
     def __init__(self, eta,    init_weights, should_stop, pvalue=1.0, nvalue=-1.0,total_error= list()):
         super().__init__(eta, init_weights, should_stop, pvalue, nvalue,total_error)
-        
+
 
     @abstractmethod
     def compute_update(self, X, y):
@@ -34,13 +36,13 @@ class BatchLinearClassifier(lc.LinearClassifier):
                 deltaW += update  *  xi
                 deltaB += update
                 errors += (target  != self.predict(xi))
-            self.total_error.append(errors) 
+            self.total_error.append(errors)
             # reset the weights and bias fo next epoch
-            
+
             self._w = self._w + deltaW
             self._b = self._b + deltaB
             i+=1
-        
+
         return self
 
 
@@ -68,7 +70,12 @@ class BatchLogisticRegression(BatchLinearClassifier):
            output = self.activation(net_input)
            error = (target - output)
            update = error*self._eta
+           cost = (target*(np.log(output)) + ((1 - target)*(np.log(1 - output))))
            return update
 
     def activation(self, z):
             return 1. / (1. + np.exp(-np.clip(z, -250, 250)))
+            
+    def predict(self, X):
+        return np.where(self.activation(self.net_input(X))>= 0.5, 1, 0)
+
